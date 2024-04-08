@@ -19,6 +19,11 @@ async function readOne(filter, projection, populate) {
     .populate(populate?.chats && "chats.chat");
   return await query?.populate(populate?.users && "chats.chat.to");
 }
+async function readOne(filter, projection, populate) {
+  let query = await userModel
+    .findOne({ ...filter})
+  return  query;
+}
 
 async function update(id, data) {
   // כמו findOne מחזיר את האוביקט ולא רק כמה הוגדר
