@@ -7,31 +7,25 @@ const mongoose = require("mongoose");
 //Creating legitimacy for the schema
 const userSchema = new mongoose.Schema({
   email: {
-    type: String,
-    unique: true,
-    require: true,
+      type: String,
+      unique: true,
+      required: true
   },
-
   fullName: {
-    type: String,
-    require: true,
+      type: String,
+      required: true
   },
-
   password: {
-    type: String,
-    select: false,
+      type: String,
+      select: false
   },
+  avatar: String,
 
-  avartar: String,
-
-  chats: [
-    {
-      
+  chats: [{
       chat: {
-        type: mongoose.Schema.ObjectId,
-        ref: "chat",
+          type: mongoose.SchemaTypes.ObjectId,
+          ref: 'chat'
       },
-
       isSent: Boolean,
       isRecieved: Boolean,
       isFavorite: Boolean,
@@ -39,22 +33,14 @@ const userSchema = new mongoose.Schema({
       isDraft: Boolean,
       isRead: { type: Boolean, default: false },
       labels: [String]
-
-    },
-  ],
-
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  }],
 
   isActive: {
-    type: Boolean,
-    default: true,
-  },
-});
+      type: Boolean,
+      default: true
+  }
+})
 
-//Make schema
-const userModel =  mongoose.model("user", userSchema);
+const userModel = mongoose.model('user', userSchema)
 
-module.exports = userModel;
+module.exports = userModel

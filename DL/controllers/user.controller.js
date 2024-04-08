@@ -9,20 +9,18 @@ async function read(filter, projection, populate) {
     .find({ ...filter, isActive: true }, projection)
     .populate(populate?.chats && "chats.chat");
   return Promise.all(
-    query.map(async (c) => await c.populate(populate?.users && "chats.chat.to"))
+    query.map(async (c) => await c.populate(populate?.users && "chats.chat.members"))
   );
 }
 
-async function readOne(filter, projection, populate) {
-  let query = await userModel
-    .findOne({ ...filter, isActive: true }, projection)
-    .populate(populate?.chats && "chats.chat");
-  return await query?.populate(populate?.users && "chats.chat.to");
-}
-async function readOne(filter, projection, populate) {
-  let query = await userModel
-    .findOne({ ...filter})
-  return  query;
+async function readOne(filter, projection, populate = {}) {
+  let user = await userModel.findOne({ ...filter, isActive: true }, projection)
+  if (user) {
+    populate.chats && await user.populate("chats.chat");
+    populate.users && await user.populate("chats.chat.msg.from")
+  }
+  return user.toObject();
+
 }
 
 async function update(id, data) {

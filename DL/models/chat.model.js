@@ -26,14 +26,11 @@ const chatSchema = new mongoose.Schema({
 
     msg: {
         type: [messageSchema],
-        required: true
     },
-    
-    to: [{
+    members: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'user',
-    }],
-    
+    }],    
     lastDate: {
         type: Date,
         default: Date
