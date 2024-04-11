@@ -9,9 +9,9 @@ const chatModel = require('./models/chat.model')
 async function go() {
   require('dotenv').config()
   require('./db').connect()
- const user = await userController.readOne();
-  console.log(user);
-  return ""
+  // const user = await userController.readOne();
+  // console.log(user);
+  // return ""
   await userModel.collection.drop()
   await chatModel.collection.drop()
 
@@ -64,14 +64,14 @@ async function go() {
 
   ]
 
-  let ru1 = await userController.create(users[0])
-  let ru2 = await userController.create(users[1])
-  let ru3 = await userController.create(users[2])
-  let ru4 = await userController.create(users[3])
-  let ru5 = await userController.create(users[4])
-  let ru6 = await userController.create(users[5])
-  // let ru7 = await userController.create(users[6])
-
+  let ru1 = await userModel.create(users[0])
+  let ru2 = await userModel.create(users[1])
+  let ru3 = await userModel.create(users[2])
+  let ru4 = await userModel.create(users[3])
+  let ru5 = await userModel.create(users[4])
+  let ru6 = await userModel.create(users[5])
+  // let ru7 = await userModel.create(users[6])
+  // const [ru1, ru2, ru3, ru4, ru5] = await userModel.find()
   const members = [ru1, ru2, ru3, ru4, ru5, ru6];
 
   const chats = [
@@ -227,6 +227,11 @@ async function go() {
       chat: ee._id,
       isSent: true,
       isRecieved: e.members.includes(first._id, 1),
+      isSent: Boolean(Math.round(Math.random())),
+      isFavorite: Boolean(Math.round(Math.random())),
+      isDeleted: Boolean(Math.round(Math.random())),
+      isDraft: Boolean(Math.round(Math.random())),
+      isRead: Boolean(Math.round(Math.random())),
     })
     await first.save();
 
@@ -237,6 +242,11 @@ async function go() {
         mm.chats.push({
           chat: ee._id,
           isRecieved: true,
+          isSent: Boolean(Math.round(Math.random())),
+          isFavorite: Boolean(Math.round(Math.random())),
+          isDeleted: Boolean(Math.round(Math.random())),
+          isDraft: Boolean(Math.round(Math.random())),
+          isRead: Boolean(Math.round(Math.random())),
         })
         await mm.save()
       })
@@ -246,4 +256,4 @@ async function go() {
   console.log("###########  END  ##########");
 
 }
-module.exports = {go}
+module.exports = { go }
