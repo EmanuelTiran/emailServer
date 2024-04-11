@@ -15,7 +15,19 @@ router.get("/inbox", async (req, res) => {
     console.log(error.message);
   }
 });
-router.get("/favorite", async (req, res) => {
+// router.get("/favorite", async (req, res) => {
+//   try {
+
+//     const userId = "6613ca3fbc2cd76b285ef0c6"
+//     const result = await service.getFavoriteUser(userId);
+//     console.log(result);
+//     res.json(result)
+    
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
+router.get("/sentemails", async (req, res) => {
   try {
 
     const userId = "6617995b58378250e52cf22f"
