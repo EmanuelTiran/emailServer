@@ -19,12 +19,18 @@ async function getInboxUser(userId) {
   }
 }
 async function getFavoriteUser(userId) {
-  let user = await userModel.findOne({ _id:userId, isActive: true }, '',{ chats: true, users: true })
+  let user = await userModel.findOne({ _id: userId, isActive: true }, 'chats');
   if (user) {
-    populate.chats && await user.populate("chats.chat");
-    populate.users && await user.populate("chats.chat.msg.from")
+    await user.populate({
+      path: 'chats.chat',
+      match: { 'isFavorite': true },
+      populate: {
+        path: 'msg.from',
+        model: 'user'
+      }
+    }).execPopulate();
   }
-  return user.toObject();
+  return user.chats;
 }
 
 

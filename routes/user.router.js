@@ -6,7 +6,7 @@ const express = require("express"),
 router.get("/inbox", async (req, res) => {
   try {
 
-    const userId = "6613ca3fbc2cd76b285ef0c6"
+    const userId = "6617995b58378250e52cf22f"
     const result = await service.getInboxUser(userId);
     console.log(result);
     res.json(result)
@@ -18,7 +18,7 @@ router.get("/inbox", async (req, res) => {
 router.get("/favorite", async (req, res) => {
   try {
 
-    const userId = "6613ca3fbc2cd76b285ef0c6"
+    const userId = "6617995b58378250e52cf22f"
     const result = await service.getFavoriteUser(userId);
     console.log(result);
     res.json(result)

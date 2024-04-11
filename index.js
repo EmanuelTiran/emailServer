@@ -10,5 +10,6 @@ app.use("/email", require('./routes/email.router'))
 app.use("/user", require('./routes/user.router'))
 
 require("./DL/db").connect();
+// require('./DL/test_data').go()
 
 app.listen(5050, () => console.log("The server is runnig on port 5050..."));
