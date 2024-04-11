@@ -3,38 +3,40 @@ const service = require("../DL/BL/services/user.service");
 const express = require("express"),
   router = express.Router();
 
-router.get("/inbox", async (req, res) => {
-  try {
+const { auth } = require("../middlewares/auth")
 
-    const userId = "6613ca3fbc2cd76b285ef0c6"
+router.get("/inbox", auth, async (req, res) => {
+  try {
+    console.log(req.headers.user._id);
+    // const userId = "6617995c58378250e52cf23a"
+    const userId = req.headers.user._id
     const result = await service.getInboxUser(userId);
-    console.log(result);
+    // console.log(result);
     res.json(result)
-    
+
   } catch (error) {
     console.log(error.message);
   }
 });
-// router.get("/favorite", async (req, res) => {
-//   try {
 
-//     const userId = "6613ca3fbc2cd76b285ef0c6"
-//     const result = await service.getFavoriteUser(userId);
-//     console.log(result);
-//     res.json(result)
-    
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// });
 router.get("/sentemails", async (req, res) => {
   try {
 
-    const userId = "6613ca3fbc2cd76b285ef0c6"
+    const userId = "6617995c58378250e52cf23a"
     const result = await service.getSentUser(userId);
-    console.log(result);
     res.json(result)
-    
+
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+router.get("/favorite", async (req, res) => {
+  try {
+
+    const userId = "6617995c58378250e52cf23a"
+    const result = await service.getFavoriteUser(userId);
+    res.json(result)
+
   } catch (error) {
     console.log(error.message);
   }
