@@ -30,7 +30,43 @@ async function getFavoriteUser(userId) {
       }
     }).execPopulate();
   }
-  return user.chats;
+  return user.toObject();
+
+}
+
+async function getSentUser(userId) {
+  let user = await userModel.findOne({ _id: userId, isActive: true }, "", populate = { chats: true, users: true })
+  if (user) {
+    populate.chats && await user.populate("chats.chat");
+    populate.users && await user.populate("chats.chat.msg.from")
+    user.chats.filter(chat => chat.isSent);
+  }
+  return user.toObject();
+}
+
+async function getFavoriteUser(userId) {
+  let user = await userModel.findOne({ _id: userId, isActive: true }, "", populate = { chats: true, users: true })
+  if (user) {
+    populate.chats && await user.populate("chats.chat");
+    populate.users && await user.populate("chats.chat.msg.from")
+    user.chats.filter(chat => chat.isFavorite);
+  }
+  return user.toObject();
+}
+
+async function getReadUser(userId) {
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+
+    return user.chats.filter(chat => chat.isRead);
+  } catch (error) {
+    console.error('Error in getFavoriteUser:', error);
+  }
 }
 
 

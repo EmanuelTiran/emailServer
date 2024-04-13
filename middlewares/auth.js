@@ -1,5 +1,6 @@
 
 //this function called When the user wants to perform actions 
+
 const auth = (req, res, next) => {
     const token = req.headers.authorization?.split('Bearer ')[1];
     try {
