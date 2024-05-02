@@ -63,4 +63,17 @@ router.put("/:id", async (req, res) => { });
 
 router.delete("/:id", async (req, res) => { });
 
+router.get('/', auth, async (req, res) => {
+  try {
+    if (req.user) {
+      res.send(req.user)
+    } else {
+      throw "USER ISN'T EXIST"
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('אירעה שגיאה');
+  }
+});
+
 module.exports = router;

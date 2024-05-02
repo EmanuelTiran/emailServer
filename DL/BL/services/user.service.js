@@ -7,6 +7,7 @@ const {
 } = require("../../controllers/user.controller");
 const userModel = require("../../models/user.model");
 
+
 async function getInboxUser(userId) {
   try {
     const user = await readOne({ _id: userId }, "", { chats: true, users: true })
@@ -41,6 +42,11 @@ async function getSentUser(userId) {
     populate.users && await user.populate("chats.chat.msg.from")
     user.chats.filter(chat => chat.isSent);
   }
+  return user.toObject();
+}
+async function getUser(userId) {
+  let user = await userModel.findOne({ _id: userId, isActive: true },)
+
   return user.toObject();
 }
 
@@ -100,6 +106,16 @@ const getAvatarUser = async (id) => {
   }
 };
 
+async function createNewUser(newUser) {
+  try {
+    const user = new userModel(newUser);
+    await user.save();
+    console.log("router auth regitration:", newUser);
+    return newUser;
+  } catch (error) {
+    console.error('Error in getInboxUser:', error);
+    // throw error;
+  }
+}
 
-
-module.exports = { getInboxUser, getNameUser, getAvatarUser, getFavoriteUser, getReadUser, getSentUser };
+module.exports = { getInboxUser, getNameUser, getAvatarUser, getFavoriteUser, getReadUser, getSentUser, createNewUser, getUser };

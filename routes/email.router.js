@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const service = require("../DL/BL/services/chat.service");
+
 const {auth} = require("../middlewares/auth");
 router.use(express.json());
 
@@ -17,26 +19,18 @@ router.post('/', auth, async (req, res) => {
     });
 });
 
-// // Route to handle deleting multiple emails by selection
-// router.post('/deleteManyBySelect',  async (req, res) => {
-//     // Implementation for deleting multiple emails
-// });
 
-// // Other routes...
-// router.get('/',  async (req, res) => {
-//     // Implementation for getting all emails
-// });
+router.get('/:emailId',  async (req, res) => {
+    console.log(req.params.emailId);
+   try {
+    const result = await service.getChatById(req.params.emailId)
+    res.json(result)
+  } catch (error) {
+    console.log(error.message);
+  }
 
-// router.get('/:id',  async (req, res) => {
-//     // Implementation for getting an email by ID
-// });
+});
 
-// router.post('/:id',  async (req, res) => {
-//     // Implementation for deleting an email by ID
-// });
 
-// router.get('/favorites',  async (req, res) => {
-//     // Implementation for getting favorite emails
-// });
 
 module.exports = router;
